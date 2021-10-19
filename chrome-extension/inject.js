@@ -41,7 +41,7 @@ function injectToDOM(fn, ...args) {
 }
 
 counter = 0
-
+counter2 = 0
 
 function focusButton(){
   e = document.createElement('div')
@@ -133,9 +133,9 @@ function showPageButton(showPage){
 
   e2.innerHTML = `Always Show Original Page`
   e2.onclick = () => {
-    counter += 1
-    e2.style.background = `linear-gradient(90deg, #666 ${counter*5}%, #000 ${0}%)`
-    if(counter == 20){
+    counter2 += 1
+    e2.style.background = `linear-gradient(90deg, #666 ${counter2*5}%, #000 ${0}%)`
+    if(counter2 == 20){
       localStorage.setItem("focusExtension:enabled", "false")
       showPage()
     }
