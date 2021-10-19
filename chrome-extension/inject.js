@@ -41,29 +41,94 @@ function injectToDOM(fn, ...args) {
 }
 
 
+function focusButton(){
+  e = document.createElement('div')
+  e.style.cssText = `
+    z-index: 1000;
+    visibility: visible !important;
+    background-color: #444;
+    // height: 40px;
+    // width: 150px;
+    border-radius: 5px;
+    color: white;
+    padding: 10px;
+    position: fixed;
+    bottom: 500px;
+    right: -5px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: large;
+    text-align: center;
+    transform: rotate(-90deg);
+    transform-origin: bottom right;
 
+    box-shadow: 0 0 15px #f9f;
+
+  `
+
+  
+
+  e.innerHTML = `Focus`
+  e.onclick = () => {console.log("fdjskdfdksfj"); localStorage.setItem("focusExtension:enabled", "true"); window.location.replace("https://" + location.host);}
+  return e
+}
 
 function showPageButton(showPage){
   e = document.createElement('div')
   e.style.cssText = `
+    z-index: 1000;
     visibility: visible !important;
-    background-color: #314963;
+    background-color: #444;
     // height: 40px;
-    // width: 40px;
-    // border-radius: 30%;
+    // width: 150px;
+    border-radius: 5px;
     color: white;
     padding: 10px;
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: 500px;
+    right: -5px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: large;
+    text-align: center;
+    transform: rotate(-90deg);
+    transform-origin: bottom right;
+
+    box-shadow: 0 0 15px #f9f;
+
   `
 
-  e.innerHTML = `Show Full Page`
+  e.innerHTML = `Show Original Page`
   e.onclick = () => {showPage()}
 
-  return e
+  e2 = document.createElement('div')
+  e2.style.cssText = `
+    z-index: 1000;
+    visibility: visible !important;
+    background-color: #444;
+    // height: 40px;
+    // width: 200px;
+    border-radius: 5px;
+    color: white;
+    padding: 10px;
+    position: fixed;
+    bottom: 300px;
+    right: -5px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: large;
+    text-align: center;
+    transform: rotate(-90deg);
+    transform-origin: bottom right;
+  
+    box-shadow: 0 0 15px #f9f;
+
+  `
+
+  e2.innerHTML = `Always Show Original Page`
+  e2.onclick = () => {localStorage.setItem("focusExtension:enabled", "false"); showPage()}
+
+  e3 = document.createElement('div')
+  e3.appendChild(e)
+  e3.appendChild(e2)
+  return e3
 }
 
 
@@ -91,6 +156,14 @@ function cleanup(){
 
 window.addEventListener("urlchange", () => {
 
+  enabled = (localStorage.getItem('focusExtension:enabled') || 'true') === 'true';
+  console.log('focus enabled: ' + enabled)
+
+  if(!enabled){
+    s.innerHTML = ""
+    s.appendChild(focusButton())
+    return
+  }
 
   // Facebook
   if(window.location.href === 'https://www.facebook.com/'){
@@ -118,7 +191,7 @@ window.addEventListener("urlchange", () => {
 
 
   // Twitter
-  if(window.location.href === 'https://twitter.com/'){
+  if(window.location.href === 'https://twitter.com/' || window.location.href === 'https://twitter.com/home'){
     window.location.replace('https://twitter.com/explore')
   }
 
@@ -134,12 +207,12 @@ window.addEventListener("urlchange", () => {
           body {visibility: hidden !important;}
           
           input, header, div[role="listbox"] {visibility: visible !important;}
-          
+          form[role=search] {visibility: visible !important;}
         </style>
       `
 
     
-      s.appendChild(showPageButton(()=> window.location.replace('https://twitter.com#')))
+      s.appendChild(showPageButton(()=> window.location.replace('https://twitter.com/home#')))
 
   
 
