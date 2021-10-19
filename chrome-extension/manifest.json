@@ -1,0 +1,16 @@
+{
+  "name": "Focus",
+  "version": "0.0.4",
+  "manifest_version": 2,
+  "description": "Remove feeds/recs from Twitter, Facebook, Youtube, etc and put keyboard focus on the search input field",
+  "homepage_url": "https://github.com/rmst/focus",
+  "content_scripts": [
+    {
+      "matches": ["https://*.facebook.com/*", "https://*.twitter.com/*", "https://*.youtube.com/*", "https://*.slack.com/*", "https://*.instagram.com/*", "https://*.reddit.com/*", "https://*.messenger.com/*"],
+      "matches_old": ["<all_urls>"],
+      "js": ["inject.js"],
+      "css": [],
+      "run_at": "document_start"
+    }
+  ]
+}
