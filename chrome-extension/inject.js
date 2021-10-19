@@ -40,6 +40,8 @@ function injectToDOM(fn, ...args) {
   document.documentElement.appendChild(script)
 }
 
+counter = 0
+
 
 function focusButton(){
   e = document.createElement('div')
@@ -56,7 +58,7 @@ function focusButton(){
     bottom: 500px;
     right: -5px;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: large;
+    font-size: normal;
     text-align: center;
     transform: rotate(-90deg);
     transform-origin: bottom right;
@@ -68,7 +70,7 @@ function focusButton(){
   
 
   e.innerHTML = `Focus`
-  e.onclick = () => {console.log("fdjskdfdksfj"); localStorage.setItem("focusExtension:enabled", "true"); window.location.replace("https://" + location.host);}
+  e.onclick = () => {localStorage.setItem("focusExtension:enabled", "true"); window.location.replace("https://" + location.host);}
   return e
 }
 
@@ -91,13 +93,19 @@ function showPageButton(showPage){
     text-align: center;
     transform: rotate(-90deg);
     transform-origin: bottom right;
-
+    
     box-shadow: 0 0 15px #f9f;
+    user-select: none;
 
   `
 
   e.innerHTML = `Show Original Page`
-  e.onclick = () => {showPage()}
+  e.onclick = () => {
+    counter += 1
+    e.style.background = `linear-gradient(90deg, #666 ${counter*5}%, #000 ${0}%)`
+    if(counter == 20)
+      showPage()
+  }
 
   e2 = document.createElement('div')
   e2.style.cssText = `
@@ -119,11 +127,19 @@ function showPageButton(showPage){
     transform-origin: bottom right;
   
     box-shadow: 0 0 15px #f9f;
+    user-select: none;
 
   `
 
   e2.innerHTML = `Always Show Original Page`
-  e2.onclick = () => {localStorage.setItem("focusExtension:enabled", "false"); showPage()}
+  e2.onclick = () => {
+    counter += 1
+    e2.style.background = `linear-gradient(90deg, #666 ${counter*5}%, #000 ${0}%)`
+    if(counter == 20){
+      localStorage.setItem("focusExtension:enabled", "false")
+      showPage()
+    }
+  }
 
   e3 = document.createElement('div')
   e3.appendChild(e)
