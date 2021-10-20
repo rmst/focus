@@ -49,27 +49,46 @@ function focusButton(){
     z-index: 1000;
     visibility: visible !important;
     background-color: #444;
-    // height: 40px;
-    // width: 150px;
-    border-radius: 5px;
+    height: 80px;
+    width: 80px;
+    border-radius: 100%;
+    // border-radius: 5px;
+    
     color: white;
-    padding: 10px;
+    // padding: 10px;
     position: fixed;
-    bottom: 500px;
-    right: -5px;
+    // bottom: 500px;
+    // right: -5px;
+    bottom: -40px;
+    left: -40px;
+
     font-family: Arial, Helvetica, sans-serif;
-    font-size: normal;
+    font-size: large;
     text-align: center;
-    transform: rotate(-90deg);
-    transform-origin: bottom right;
+    // transform: rotate(-90deg);
+    // transform-origin: bottom right;
 
     box-shadow: 0 0 15px #f9f;
-
+    animation: 4s pulse 1;
   `
 
   
 
-  e.innerHTML = `Focus`
+  e.innerHTML = `
+    <style>
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(255,0,255, 0.4);
+        }
+        70% {
+            box-shadow: 0 0 0 300px rgba(255,0,255, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(255,100,255, 0);
+        }
+      }
+    </style>
+  `
   e.onclick = () => {localStorage.setItem("focusExtension:enabled", "true"); window.location.replace("https://" + location.host);}
   return e
 }
