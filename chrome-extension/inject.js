@@ -2,6 +2,19 @@
 
 // Extension utilities
 
+// function docLoaded(fn) {
+//   console.log(document.readyState)
+
+//   // see if DOM is already available
+//   if (document.readyState === "complete") {
+//       // call on next available tick
+//       setTimeout(fn, 1);
+//   } else {
+//       window.addEventListener("load", fn);
+//   }
+// }    
+
+
 function focusElement(selector='input[type=text]') {
   searchFields = document.querySelectorAll(selector)
   if(searchFields.length > 0){
@@ -46,9 +59,9 @@ counter2 = 0
 function focusButton(){
   e = document.createElement('div')
   e.style.cssText = `
-    z-index: 1000;
+    z-index: 100000;
     visibility: visible !important;
-    background-color: #444;
+    background-color: #666;
     height: 80px;
     width: 80px;
     border-radius: 100%;
@@ -72,8 +85,6 @@ function focusButton(){
     animation: 4s pulse 1;
   `
 
-  
-
   e.innerHTML = `
     <style>
       @keyframes pulse {
@@ -89,26 +100,31 @@ function focusButton(){
       }
     </style>
   `
-  e.onclick = () => {localStorage.setItem("focusExtension:enabled", "true"); window.location.replace("https://" + location.host);}
+  e.onclick = () => {
+    localStorage.setItem("focusExtension:enabled", "true")
+    window.location.replace(window.location.href.replace("#focusExtension:deactivated", ""))
+    update()
+  }
+
   return e
 }
 
-function showPageButton(showPage){
+function showPageButton(showPage=null, repeats=20){
   e = document.createElement('div')
   e.style.cssText = `
-    z-index: 1000;
+    z-index: 10000;
     visibility: visible !important;
-    background-color: #444;
+    background-color: #555;
     // height: 40px;
     // width: 150px;
     border-radius: 5px;
     color: white;
-    padding: 10px;
+    padding: 6px;
     position: fixed;
     bottom: 500px;
-    right: -5px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: large;
+    right: -3px;
+    font-family: Arial, sans-serif;
+    font-size: medium;
     text-align: center;
     transform: rotate(-90deg);
     transform-origin: bottom right;
@@ -120,27 +136,33 @@ function showPageButton(showPage){
 
   e.innerHTML = `Show Original Page`
   e.onclick = () => {
+    // console.log("fdjkfjdkf")
     counter += 1
-    e.style.background = `linear-gradient(90deg, #666 ${counter*5}%, #000 ${0}%)`
-    if(counter == 20)
-      showPage()
+    e.style.background = `linear-gradient(90deg, #111 ${counter * 100 / repeats}%, #555 0%)`
+    if(counter == repeats){
+      if(showPage !== null){
+        window.location.replace(showPage + "#focusExtension:deactivated")
+      } else {
+        s.innerHTML = ""
+      }
+    }
   }
 
   e2 = document.createElement('div')
   e2.style.cssText = `
-    z-index: 1000;
+    z-index: 10000;
     visibility: visible !important;
-    background-color: #444;
+    background-color: #555;
     // height: 40px;
     // width: 200px;
     border-radius: 5px;
     color: white;
-    padding: 10px;
+    padding: 6px;
     position: fixed;
     bottom: 300px;
-    right: -5px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: large;
+    right: -3px;
+    font-family: Arial, sans-serif;
+    font-size: medium;
     text-align: center;
     transform: rotate(-90deg);
     transform-origin: bottom right;
@@ -150,13 +172,17 @@ function showPageButton(showPage){
 
   `
 
-  e2.innerHTML = `Always Show Original Page`
+  e2.innerHTML = `Permanently Show Original Page`
   e2.onclick = () => {
     counter2 += 1
-    e2.style.background = `linear-gradient(90deg, #666 ${counter2*5}%, #000 ${0}%)`
+    e2.style.background = `linear-gradient(90deg, #111 ${counter2*5}%, #555 0%)`
     if(counter2 == 20){
       localStorage.setItem("focusExtension:enabled", "false")
-      showPage()
+      if(showPage !== null){
+        window.location.replace(showPage)
+      } else {
+        update()
+      }
     }
   }
 
@@ -181,21 +207,22 @@ setTimeout(() => {
 }, 0)
 
 
-function cleanup(){
-  s.innerHTML = ''
-}
 
 
+window.addEventListener("urlchange", update)
 
 
+function update() {
 
-window.addEventListener("urlchange", () => {
+  counter = 0
+  counter2 = 0
+  s.innerHTML = ""
+
 
   enabled = (localStorage.getItem('focusExtension:enabled') || 'true') === 'true';
   console.log('focus enabled: ' + enabled)
 
-  if(!enabled){
-    s.innerHTML = ""
+  if(!enabled || location.hash.includes("focusExtension:deactivated")){
     s.appendChild(focusButton())
     return
   }
@@ -220,7 +247,7 @@ window.addEventListener("urlchange", () => {
         
       focusElement('input[type=search]')
 
-      s.appendChild(showPageButton(()=> window.location.replace('https://www.facebook.com#')))
+      s.appendChild(showPageButton('https://www.facebook.com'))
     } , 0)
   }
 
@@ -230,14 +257,14 @@ window.addEventListener("urlchange", () => {
     window.location.replace('https://twitter.com/explore')
   }
 
-  else if(window.location.href === 'https://twitter.com/explore'){
+  if(window.location.href === 'https://twitter.com/explore'){
     // console.log("twitter")
 
     setTimeout(() => {
       // s = document.createElement('style')
       s.innerHTML = `
         <style>
-          :not(#show-page) {visibility: inherit;}
+          * {visibility: inherit;}
 
           body {visibility: hidden !important;}
           
@@ -247,7 +274,7 @@ window.addEventListener("urlchange", () => {
       `
 
     
-      s.appendChild(showPageButton(()=> window.location.replace('https://twitter.com/home#')))
+      s.appendChild(showPageButton('https://twitter.com/home'))
 
   
 
@@ -257,11 +284,11 @@ window.addEventListener("urlchange", () => {
 
 
   // Youtube
-  else if(window.location.href === 'https://www.youtube.com/'){
+  if(window.location.href === 'https://www.youtube.com/'){
     window.location.replace('https://www.youtube.com/results?search_query=')
   }
 
-  else if(window.location.href === 'https://www.youtube.com/results?search_query='){
+  if(window.location.href === 'https://www.youtube.com/results?search_query='){
 
     setTimeout(() => {
       
@@ -274,7 +301,7 @@ window.addEventListener("urlchange", () => {
       //   </style>
       // `
       
-      s.appendChild(showPageButton(()=> window.location.replace('https://youtube.com#')))
+      s.appendChild(showPageButton('https://youtube.com'))
 
       focusElement('input[type=text]')
 
@@ -282,8 +309,41 @@ window.addEventListener("urlchange", () => {
     }, 0)
   }
 
+  if(window.location.href.split('?')[0] === 'https://www.youtube.com/watch'){
+    s.appendChild(showPageButton(null, repeats=1))
 
-  else if(window.location.href === 'https://www.instagram.com/'){
+    s.insertAdjacentHTML('beforeend', `
+      <style>
+        #related {visibility: hidden !important;}
+      </style>
+    `)
+  }
+
+  // console.log(location.host)
+  if(location.host === 'www.youtube.com'){
+    // remove subscription from sidebar
+    (function check(i=0) {
+      Array.from(document.querySelectorAll('ytd-guide-section-renderer')).map(e => {
+        Array.from(e.querySelectorAll('h3')).map(e2 => {
+          // console.log(e2)
+          if(e2.innerHTML.includes('Subscriptions')){
+            e.style.display = 'none'
+            return
+          }
+        })
+      })
+      
+      if(i < 20)
+        setTimeout(check, 500, i+1)
+    })()
+  }
+
+
+
+
+  // Instagram
+
+  if(window.location.href === 'https://www.instagram.com/'){
     setTimeout(() => {
       
       s.innerHTML = `
@@ -294,7 +354,7 @@ window.addEventListener("urlchange", () => {
         </style>
       `
       
-      s.appendChild(showPageButton(()=> window.location.replace('https://instagram.com#')))
+      s.appendChild(showPageButton('https://instagram.com'))
 
       focusElement('input[type=text]')
 
@@ -303,7 +363,7 @@ window.addEventListener("urlchange", () => {
   }
 
 
-  else if(window.location.href === 'https://www.reddit.com/'){
+  if(window.location.href === 'https://www.reddit.com/'){
     setTimeout(() => {
       
       s.innerHTML = `
@@ -314,7 +374,7 @@ window.addEventListener("urlchange", () => {
         </style>
       `
       
-      s.appendChild(showPageButton(()=> window.location.replace('https://www.reddit.com#')))
+      s.appendChild(showPageButton('https://www.reddit.com'))
 
       focusElement('input[type=search]')
 
@@ -323,7 +383,7 @@ window.addEventListener("urlchange", () => {
   }
 
 
-  else if(location.host === 'www.messenger.com' && prev_url === "" && location.hash === ""){
+  if(location.host === 'www.messenger.com' && prev_url === "" && location.hash === ""){
   //   window.location.replace('https://www.messenger.com/t/')
   // }
 
@@ -339,18 +399,13 @@ window.addEventListener("urlchange", () => {
         </style>
       `
       
-      s.appendChild(showPageButton(()=> window.location.replace('https://www.messenger.com/#_')))
+      s.appendChild(showPageButton('https://www.messenger.com/'))
 
       focusElement('input[type=search]')
 
     }, 0)
   }
-
-  else {
-    cleanup()
-  }
-
-})
+}
 
 
 prev_url = ""
