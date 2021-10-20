@@ -6,7 +6,7 @@
   "homepage_url": "https://github.com/rmst/focus",
   "content_scripts": [
     {
-      "matches": ["https://*.facebook.com/*", "https://*.twitter.com/*", "https://*.youtube.com/*", "https://*.slack.com/*", "https://*.instagram.com/*", "https://*.reddit.com/*", "https://*.messenger.com/*"],
+      "matches": ["https://*.facebook.com/*", "https://*.twitter.com/*", "https://*.youtube.com/*", "https://*.slack.com/*", "https://*.instagram.com/*", "https://*.reddit.com/*", "https://*.messenger.com/*", "https://mail.google.com/*"],
       "matches_old": ["<all_urls>"],
       "js": ["inject.js"],
       "css": [],

@@ -2,17 +2,17 @@
 
 // Extension utilities
 
-// function docLoaded(fn) {
-//   console.log(document.readyState)
+function docLoaded(fn) {
+  console.log(document.readyState)
 
-//   // see if DOM is already available
-//   if (document.readyState === "complete") {
-//       // call on next available tick
-//       setTimeout(fn, 1);
-//   } else {
-//       window.addEventListener("load", fn);
-//   }
-// }    
+  // see if DOM is already available
+  if (document.readyState === "complete") {
+      // call on next available tick
+      setTimeout(fn, 1);
+  } else {
+      window.addEventListener("load", fn);
+  }
+}    
 
 
 function focusElement(selector='input[type=text]') {
@@ -82,7 +82,7 @@ function focusButton(){
     // transform-origin: bottom right;
 
     box-shadow: 0 0 15px #f9f;
-    animation: 4s pulse 1;
+    animation: 2s pulse 2;
   `
 
   e.innerHTML = `
@@ -92,7 +92,7 @@ function focusButton(){
           box-shadow: 0 0 0 0 rgba(255,0,255, 0.4);
         }
         70% {
-            box-shadow: 0 0 0 300px rgba(255,0,255, 0);
+            box-shadow: 0 0 0 100px rgba(255,0,255, 0);
         }
         100% {
             box-shadow: 0 0 0 0 rgba(255,100,255, 0);
@@ -362,7 +362,7 @@ function update() {
     
   }
 
-
+  // Reddit
   if(window.location.href === 'https://www.reddit.com/'){
     setTimeout(() => {
       
@@ -382,6 +382,8 @@ function update() {
     
   }
 
+
+  // Facebook Messenger
 
   if(location.host === 'www.messenger.com' && prev_url === "" && location.hash === ""){
   //   window.location.replace('https://www.messenger.com/t/')
@@ -405,6 +407,32 @@ function update() {
 
     }, 0)
   }
+
+
+
+
+  // Gmail
+  if(location.host === 'mail.google.com'){
+    if(location.hash === ("#inbox")){
+      // window.location.hash = "#search/from%3Ame+to%3Ame"
+      focusElement("input[aria-label='Search mail']")
+      
+      s.appendChild(showPageButton(null, repeats=1))
+
+      s.insertAdjacentHTML('beforeend',`
+        <style>
+         div[role=main] {visibility: hidden;}
+        </style>
+      `)
+
+    }
+
+    if(location.hash.includes("#search")){
+
+    }
+
+  }
+    
 }
 
 

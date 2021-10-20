@@ -1,6 +1,6 @@
 # Focus
 
-Focus is an extension for the Chrome browser to replace the front pages from Twitter, Facebook, Youtube, etc with a search page and put keyboard focus on the search input field.
+The goal of the Focus browser extension is to hide feeds, recommendations and other distractions while retaining as much functionality as possible to do focussed work. On most pages Focus will replace the front page with a search page.
 
 
 ### Supported Sites
@@ -10,6 +10,9 @@ Focus is an extension for the Chrome browser to replace the front pages from Twi
 - instagram.com
 - facebook.com
 - messenger.com
+- mail.google.com
+
+The extension can be disabled for each page individually using the buttons on the right edge of the page. To re-enable it click the button at the bottom left corner of the page.
 
 
 ### Tips
