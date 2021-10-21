@@ -315,6 +315,7 @@ function update() {
     s.insertAdjacentHTML('beforeend', `
       <style>
         #related {visibility: hidden !important;}
+        #player-theater-container {z-index: 10001}
       </style>
     `)
   }
