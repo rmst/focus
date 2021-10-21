@@ -401,7 +401,7 @@ function update() {
         </style>
       `
       
-      s.appendChild(showPageButton('https://www.messenger.com/'))
+      s.appendChild(showPageButton('https://www.messenger.com/', repeats=1))
 
       focusElement('input[type=search]')
 
@@ -419,11 +419,11 @@ function update() {
       
       s.appendChild(showPageButton(null, repeats=1))
 
-      s.insertAdjacentHTML('beforeend',`
-        <style>
-         div[role=main] {visibility: hidden;}
-        </style>
-      `)
+      // s.insertAdjacentHTML('beforeend',`
+      //   <style>
+      //    div[role=main] {visibility: hidden;}
+      //   </style>
+      // `)
 
     }
 

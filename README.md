@@ -1,6 +1,6 @@
 # Focus
 
-The goal of the Focus browser extension is to hide feeds, recommendations and other distractions while retaining as much functionality as possible to do focussed work. On most pages Focus will replace the front page with a search page.
+The goal of the Focus browser extension is to hide feeds, recommendations and other distractions while retaining maximal functionality useful for focussed work. On most pages, Focus will replace the front page with a search page.
 
 
 ### Supported Sites
@@ -10,7 +10,7 @@ The goal of the Focus browser extension is to hide feeds, recommendations and ot
 - instagram.com
 - facebook.com
 - messenger.com
-- mail.google.com
+- mail.google.com (only to auto-focus the search bar, nothing is hidden)
 
 The extension can be disabled for each page individually using the buttons on the right edge of the page. To re-enable it click the button at the bottom left corner of the page.
 
