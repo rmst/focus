@@ -267,7 +267,9 @@ function update() {
           * {visibility: inherit;}
 
           body {visibility: hidden !important;}
-          
+
+          a[href='/notifications']>div>div>div {visibility: hidden !important;}  /* hide notification badge */
+
           input, header, div[role="listbox"] {visibility: visible !important;}
           form[role=search] {visibility: visible !important;}
         </style>
@@ -355,7 +357,7 @@ function update() {
         </style>
       `
       
-      s.appendChild(showPageButton('https://instagram.com'))
+      s.appendChild(showPageButton(null))
 
       focusElement('input[type=text]')
 
