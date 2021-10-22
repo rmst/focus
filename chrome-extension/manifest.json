@@ -1,6 +1,6 @@
 {
   "name": "Focus",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "manifest_version": 3,
   "description": "Hides feeds and recommendations from Twitter, Youtube, etc. while still keeping the sites usable for research",
   "homepage_url": "https://github.com/rmst/focus",
